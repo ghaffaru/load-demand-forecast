@@ -28,7 +28,7 @@ def hourly_predict():
     }
     prediction = hourly_model.predict(pd.DataFrame(test, index=[0]))[0]
     return jsonify({
-        'prediction': prediction
+        'prediction': str(prediction)
     })
 
 
