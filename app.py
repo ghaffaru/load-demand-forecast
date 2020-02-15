@@ -3,7 +3,7 @@ from joblib import load
 import pandas as pd
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/')
 def home():
