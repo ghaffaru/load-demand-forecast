@@ -32,6 +32,29 @@ def hourly_predict():
         'prediction': str(prediction)
     })
 
+@app.route('/api/predict/daily', methods=['POST'])
+def daily_predict():
+    daily_model = load('model/daily/XG0.88.joblib')
+    day = request.json['day']
+    month = request.json['month']
+    humidity = request.json['humidity']
+    temperature = request.json['temperature']
+    pressure = request.json['pressure']
+
+    test = pd.DataFrame({
+        "Day" : day,
+        "Month" : month,
+        "Pressure" : pressure,
+        "Relative Humidity" : humidity,
+        "Temperature" : temperature
+    }, index=[0])
+
+    prediction = daily_model.predict(test)[0]
+    return jsonify({
+        'prediction' : str(prediction)
+    })
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
