@@ -8,7 +8,7 @@ CORS(app)
 
 @app.route('/')
 def home():
-    return 'hello'
+    return 'This is a change'
 
 
 @app.route('/api/predict/hourly', methods=['POST'])
