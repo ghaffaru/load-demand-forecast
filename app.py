@@ -2,14 +2,17 @@ from flask import Flask, request, jsonify
 from joblib import load
 import pandas as pd
 from flask_cors import CORS
-
+from flask_sqlalchemy import SQLAlchemy
+from models import HourlyPrediction
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def home():
     return 'This is a change'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///predictions.db'
 
+db = SQLAlchemy(app)
 
 @app.route('/api/predict/hourly', methods=['POST'])
 def hourly_predict():
@@ -28,6 +31,9 @@ def hourly_predict():
         'Temperature': temperature
     }
     prediction = hourly_model.predict(pd.DataFrame(test, index=[0]))[0]
+
+
+
     return jsonify({
         'prediction': str(prediction)
     })
