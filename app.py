@@ -63,37 +63,38 @@ def daily_predict():
     return jsonify({'prediction': str(prediction)})
 
 
-# @app.route('/api/hourly/predictions/<int:year>/<int:month>/<int:day>')
-# def hourly_predictions(year, month, day):
+@app.route('/api/hourly/predictions/<int:year>/<int:month>/<int:day>')
+def hourly_predictions(year, month, day):
 
-#     data = models.HourlyPrediction.query.filter_by(year=year,
-#                                                    month=month,
-#                                                    day=day).all()
+    data = models.HourlyPrediction.query.filter_by(year=year,
+                                                   month=month,
+                                                   day=day).all()
 
-#     all_data = []
-#     hours = []
-#     predictions = []
-#     for i in range(len(data)):
-#         hours.append(data[i].hour)
-#         predictions.append(data[i].prediction)
+    all_data = []
+    hours = []
+    predictions = []
+    for i in range(len(data)):
+        hours.append(data[i].hour)
+        predictions.append(data[i].prediction)
 
-#     return jsonify({'hours': hours, 'predictions': predictions})
+    return jsonify({'hours': hours, 'predictions': predictions})
 
-# @app.route('/api/daily/predictions/<int:year>/<int:month>/<int:day>')
-# def hourly_predictions(year, month, day):
 
-#     data = models.HourlyPrediction.query.filter_by(year=year,
-#                                                    month=month,
-#                                                    day=day).all()
+@app.route('/api/daily/predictions/<int:year>/<int:month>')
+def daily_predictions(year, month):
 
-#     all_data = []
-#     hours = []
-#     predictions = []
-#     for i in range(len(data)):
-#         hours.append(data[i].hour)
-#         predictions.append(data[i].prediction)
+    data = models.DailyPrediction.query.filter_by(year=year,
+                                                   month=month,
+                                                   ).all()
 
-#     return jsonify({'hours': hours, 'predictions': predictions})
+    all_data = []
+    days = []
+    predictions = []
+    for i in range(len(data)):
+        days.append(data[i].day)
+        predictions.append(data[i].prediction)
+
+    return jsonify({'days': days, 'predictions': predictions})
 
 if __name__ == '__main__':
     app.run(debug=True)
