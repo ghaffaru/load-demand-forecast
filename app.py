@@ -3,9 +3,12 @@ from joblib import load
 import pandas as pd
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from models import HourlyPrediction
+import scheduler
+
 app = Flask(__name__)
 CORS(app)
+
+
 
 @app.route('/')
 def home():
@@ -32,8 +35,6 @@ def hourly_predict():
     }
     prediction = hourly_model.predict(pd.DataFrame(test, index=[0]))[0]
 
-
-
     return jsonify({
         'prediction': str(prediction)
     })
@@ -58,6 +59,30 @@ def daily_predict():
     prediction = daily_model.predict(test)[0]
     return jsonify({
         'prediction' : str(prediction)
+    })
+
+
+
+# @app.route('/api/predict/hourly/scheduler', methods=['POST'])
+def hourly_predict_scheduler():
+    hourly_model = load('model/xgb0.939.joblib')
+    day = request.json['day']
+    hour = request.json['hour']
+    month = request.json['month']
+    humidity = request.json['humidity']
+    temperature = request.json['temperature']
+
+    test = {
+        'Day': day,
+        'Hour': hour,
+        'Month': month,
+        'Relative Humidity': humidity,
+        'Temperature': temperature
+    }
+    prediction = hourly_model.predict(pd.DataFrame(test, index=[0]))[0]
+
+    return jsonify({
+        'prediction': str(prediction)
     })
 
 
