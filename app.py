@@ -63,22 +63,37 @@ def daily_predict():
     return jsonify({'prediction': str(prediction)})
 
 
-@app.route('/api/hourly/predictions/<int:year>/<int:month>/<int:day>')
-def hourly_predictions(year, month, day):
+# @app.route('/api/hourly/predictions/<int:year>/<int:month>/<int:day>')
+# def hourly_predictions(year, month, day):
 
-    data = models.HourlyPrediction.query.filter_by(year=year,
-                                                   month=month,
-                                                   day=day).all()
+#     data = models.HourlyPrediction.query.filter_by(year=year,
+#                                                    month=month,
+#                                                    day=day).all()
 
-    all_data = []
-    hours = []
-    predictions = []
-    for i in range(len(data)):
-        hours.append(data[i].hour)
-        predictions.append(data[i].prediction)
+#     all_data = []
+#     hours = []
+#     predictions = []
+#     for i in range(len(data)):
+#         hours.append(data[i].hour)
+#         predictions.append(data[i].prediction)
 
-    return jsonify({'hours': hours, 'predictions': predictions})
+#     return jsonify({'hours': hours, 'predictions': predictions})
 
+# @app.route('/api/daily/predictions/<int:year>/<int:month>/<int:day>')
+# def hourly_predictions(year, month, day):
+
+#     data = models.HourlyPrediction.query.filter_by(year=year,
+#                                                    month=month,
+#                                                    day=day).all()
+
+#     all_data = []
+#     hours = []
+#     predictions = []
+#     for i in range(len(data)):
+#         hours.append(data[i].hour)
+#         predictions.append(data[i].prediction)
+
+#     return jsonify({'hours': hours, 'predictions': predictions})
 
 if __name__ == '__main__':
     app.run(debug=True)
