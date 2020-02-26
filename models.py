@@ -9,3 +9,16 @@ class HourlyPrediction(db.Model):
     humdity = db.Column(db.Float, nullable=False)
     temperature = db.Column(db.Float, nullable=False)
     prediction = db.Column(db.Float, nullable=False)
+
+
+class DailyPrediction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    day = db.Column(db.Integer, nullable=False)
+    month = db.Column(db.Integer, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    humidity = db.Column(db.Integer, nullable=False)
+    pressure = db.Column(db.Integer, nullable=False)
+    temperature = db.Column(db.Integer, nullable=False)
+    prediction = db.Column(db.Float, nullable=False)
+
+    
