@@ -31,6 +31,10 @@ def save_predictions_hourly():
 
         pred = round(float(prediction.json()['prediction']), 2)
 
+        already_pred = models.HourlyPrediction.query.filter_by(hour=hour, day=day, month=month, year=year).first()
+
+        if already_pred:
+            return
         pred_store = models.HourlyPrediction(hour=hour, day=day, month=month, year=year, humdity=humidity, temperature=temperature, prediction=pred)
 
         db.session.add(pred_store)
@@ -38,7 +42,7 @@ def save_predictions_hourly():
         db.session.commit()
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(save_predictions_hourly, 'cron', minute=41, second=0)
+scheduler.add_job(save_predictions_hourly, 'cron', minute=50, second=0)
 scheduler.start()
 
 
