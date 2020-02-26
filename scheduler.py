@@ -42,7 +42,7 @@ def save_predictions_hourly():
         db.session.commit()
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(save_predictions_hourly, 'cron', minute=50, second=0)
+scheduler.add_job(save_predictions_hourly, 'cron', minute=00, second=0)
 scheduler.start()
 
 
