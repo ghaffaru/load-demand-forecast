@@ -3,8 +3,11 @@ from joblib import load
 import pandas as pd
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
 # import scheduler
-import models
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -17,6 +20,10 @@ def home():
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///predictions.db'
 
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
+
+import models
 
 
 @app.route('/api/predict/hourly', methods=['POST'])
@@ -65,7 +72,6 @@ def daily_predict():
 
 @app.route('/api/hourly/predictions/<int:year>/<int:month>/<int:day>')
 def hourly_predictions(year, month, day):
-
     data = models.HourlyPrediction.query.filter_by(year=year,
                                                    month=month,
                                                    day=day).all()
@@ -82,10 +88,9 @@ def hourly_predictions(year, month, day):
 
 @app.route('/api/daily/predictions/<int:year>/<int:month>')
 def daily_predictions(year, month):
-
     data = models.DailyPrediction.query.filter_by(year=year,
-                                                   month=month,
-                                                   ).all()
+                                                  month=month,
+                                                  ).all()
 
     all_data = []
     days = []
@@ -95,6 +100,7 @@ def daily_predictions(year, month):
         predictions.append(data[i].prediction)
 
     return jsonify({'days': days, 'predictions': predictions})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
