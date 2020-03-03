@@ -26,8 +26,6 @@ app.config[
 
 db = SQLAlchemy(app)
 
-migrate = Migrate(app, db)
-
 
 @app.route('/api/predict/hourly', methods=['POST'])
 def hourly_predict():
