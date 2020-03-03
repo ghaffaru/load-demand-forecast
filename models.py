@@ -21,3 +21,8 @@ class DailyPrediction(db.Model):
     pressure = db.Column(db.Integer, nullable=False)
     temperature = db.Column(db.Integer, nullable=False)
     prediction = db.Column(db.Float, nullable=False)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
