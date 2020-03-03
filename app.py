@@ -3,7 +3,6 @@ from joblib import load
 import pandas as pd
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 # import scheduler
 # from models import HourlyPrediction, DailyPrediction
