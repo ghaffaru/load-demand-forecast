@@ -1,5 +1,6 @@
 from app import db
 
+
 class HourlyPrediction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hour = db.Column(db.Integer, nullable=False)
@@ -20,5 +21,3 @@ class DailyPrediction(db.Model):
     pressure = db.Column(db.Integer, nullable=False)
     temperature = db.Column(db.Integer, nullable=False)
     prediction = db.Column(db.Float, nullable=False)
-
-    

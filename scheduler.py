@@ -19,7 +19,7 @@ def save_predictions_hourly():
     temperature = round(weather.json()['main']['temp'] - 273.15, 2)
     humidity = weather.json()['main']['humidity']
 
-    if (temperature and humidity):
+    if temperature and humidity:
         headers = {'content-type': 'application/json'}
         prediction = requests.post('http://localhost:5000/api/predict/hourly',
                                    data=json.dumps({
@@ -91,6 +91,7 @@ def save_daily_predictions():
         db.session.add(pred_store)
 
         db.session.commit()
+
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(save_predictions_hourly, 'cron', minute=00, second=0)
