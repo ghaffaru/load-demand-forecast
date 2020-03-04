@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 
 import models
 
-# import scheduler
+import scheduler
 
 
 @app.route('/')
