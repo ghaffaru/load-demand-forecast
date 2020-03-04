@@ -4,7 +4,6 @@ import pandas as pd
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-# import scheduler
 # from models import HourlyPrediction, DailyPrediction
 
 app = Flask(__name__)
@@ -17,6 +16,8 @@ app.config[
 db = SQLAlchemy(app)
 
 import models
+
+# import scheduler
 
 
 @app.route('/')
