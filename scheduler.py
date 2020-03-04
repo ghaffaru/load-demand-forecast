@@ -21,7 +21,7 @@ def save_predictions_hourly():
 
     if temperature and humidity:
         headers = {'content-type': 'application/json'}
-        prediction = requests.post('http://localhost:5000/api/predict/hourly',
+        prediction = requests.post('https://load-demand-forecast.herokuapp.com/api/predict/hourly',
                                    data=json.dumps({
                                        'hour': hour,
                                        'day': day,
@@ -63,7 +63,7 @@ def save_daily_predictions():
     if (temperature and humidity and pressure):
         headers = {'content-type': 'application/json'}
 
-        prediction = requests.post('http://localhost:5000/api/predict/daily',
+        prediction = requests.post('https://load-demand-forecast.herokuapp.com/api/predict/daily',
                                    data=json.dumps({
                                        'day': day,
                                        'month': month,
