@@ -92,8 +92,8 @@ def save_daily_predictions():
 
 
 scheduler = BackgroundScheduler()
-# scheduler.add_job(save_predictions_hourly, 'cron', minute=00, second=0)
+scheduler.add_job(save_predictions_hourly, 'cron', minute=00, second=0)
 scheduler.add_job(save_daily_predictions, 'cron', hour=0, minute=00, second=0)
 # scheduler.add_job(save_daily_predictions, 'cron', minute=31, second=0)
-scheduler.add_job(save_predictions_hourly, 'cron', second=30)
+# scheduler.add_job(save_predictions_hourly, 'cron', second=30)
 scheduler.start()
