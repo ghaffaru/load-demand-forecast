@@ -9,9 +9,11 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 CORS(app)
 app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'postgres://mmacfnabrqghtw' \
+   'SQLALCHEMY_DATABASE_URI'] = 'postgres://mmacfnabrqghtw' \
                                  ':c1e2e7fbd1b1e1e1879b01e4fc7388ef50f1096e11884d4a378c4e082937865c@ec2-18-210-51-239' \
-                                 '.compute-1.amazonaws.com:5432/dfjavi9t72pkv3'
+                               '.compute-1.amazonaws.com:5432/dfjavi9t72pkv3'
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///predictions.db'
 
 db = SQLAlchemy(app)
 
@@ -23,9 +25,6 @@ import scheduler
 @app.route('/')
 def home():
     return 'This is a change'
-
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///predictions.db'
 
 
 @app.route('/api/predict/hourly', methods=['POST'])
