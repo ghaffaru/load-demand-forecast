@@ -36,18 +36,18 @@ def save_predictions_hourly():
         already_pred = models.HourlyPrediction.query.filter_by(
             hour=hour, day=day, month=month, year=year).first()
 
-        if not already_pred:
-            pred_store = models.HourlyPrediction(hour=hour,
-                                                day=day,
-                                                month=month,
-                                                year=year,
-                                                humdity=humidity,
-                                                temperature=temperature,
-                                                prediction=pred)
+        # if not already_pred:
+        pred_store = models.HourlyPrediction(hour=hour,
+                                             day=day,
+                                             month=month,
+                                             year=year,
+                                             humdity=humidity,
+                                             temperature=temperature,
+                                             prediction=pred)
 
-            db.session.add(pred_store)
+        db.session.add(pred_store)
 
-            db.session.commit()
+        db.session.commit()
 
 
 def save_daily_predictions():
@@ -77,8 +77,8 @@ def save_daily_predictions():
         already_pred = models.DailyPrediction.query.filter_by(
             day=day, month=month, year=year).first()
 
-        if not already_pred:
-            pred_store = models.DailyPrediction(day=day,
+        #if not already_pred:
+        pred_store = models.DailyPrediction(day=day,
                                             month=month,
                                             year=year,
                                             humidity=humidity,
@@ -86,14 +86,14 @@ def save_daily_predictions():
                                             pressure=pressure,
                                             prediction=pred)
 
-            db.session.add(pred_store)
+        db.session.add(pred_store)
 
-            db.session.commit()
+        db.session.commit()
 
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(save_predictions_hourly, 'cron', minute=00, second=0)
-scheduler.add_job(save_daily_predictions, 'cron', hour=0, minute=00, second=0)
+scheduler.add_job(save_daily_predictions, 'cron', hour=1, minute=00, second=0)
 # scheduler.add_job(save_daily_predictions, 'cron', minute=31, second=0)
 # scheduler.add_job(save_predictions_hourly, 'cron', second=30)
 scheduler.start()
