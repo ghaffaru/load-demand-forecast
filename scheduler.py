@@ -5,15 +5,20 @@ import json
 import models
 from app import db
 
-now = datetime.datetime.now()
-hour = now.hour
-day = now.day
-month = now.month
-year = now.year
+# now = datetime.datetime.now()
+# hour = now.hour
+# day = now.day
+# month = now.month
+# year = now.year
 
 
 def save_predictions_hourly():
-	
+    now = datetime.datetime.now()
+    hour = now.hour
+    day = now.day
+    month = now.month
+    year = now.year
+
     weather = requests.get(
         'http://api.openweathermap.org/data/2.5/weather?q=Ghana,sunyani&appid=e3311f6761891b3558c08b64e1a9bcf9'
     )
@@ -37,21 +42,26 @@ def save_predictions_hourly():
         already_pred = models.HourlyPrediction.query.filter_by(
             hour=hour, day=day, month=month, year=year).first()
 
-        # if not already_pred:
-        pred_store = models.HourlyPrediction(hour=hour,
-                                             day=day,
-                                             month=month,
-                                             year=year,
-                                             humdity=humidity,
-                                             temperature=temperature,
-                                             prediction=pred)
+        if not already_pred:
+            pred_store = models.HourlyPrediction(hour=hour,
+                                                 day=day,
+                                                 month=month,
+                                                 year=year,
+                                                 humdity=humidity,
+                                                 temperature=temperature,
+                                                 prediction=pred)
 
-        db.session.add(pred_store)
+            db.session.add(pred_store)
 
-        db.session.commit()
+            db.session.commit()
 
 
 def save_daily_predictions():
+    now = datetime.datetime.now()
+    day = now.day
+    month = now.month
+    year = now.year
+
     weather = requests.get(
         'http://api.openweathermap.org/data/2.5/weather?q=Ghana,sunyani&appid=e3311f6761891b3558c08b64e1a9bcf9'
     )
@@ -78,18 +88,18 @@ def save_daily_predictions():
         already_pred = models.DailyPrediction.query.filter_by(
             day=day, month=month, year=year).first()
 
-        #if not already_pred:
-        pred_store = models.DailyPrediction(day=day,
-                                            month=month,
-                                            year=year,
-                                            humidity=humidity,
-                                            temperature=temperature,
-                                            pressure=pressure,
-                                            prediction=pred)
+        if not already_pred:
+            pred_store = models.DailyPrediction(day=day,
+                                                month=month,
+                                                year=year,
+                                                humidity=humidity,
+                                                temperature=temperature,
+                                                pressure=pressure,
+                                                prediction=pred)
 
-        db.session.add(pred_store)
+            db.session.add(pred_store)
 
-        db.session.commit()
+            db.session.commit()
 
 
 scheduler = BackgroundScheduler()
