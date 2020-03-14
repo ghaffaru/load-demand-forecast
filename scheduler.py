@@ -5,15 +5,15 @@ import json
 import models
 from app import db
 
-
+now = datetime.datetime.now()
+hour = now.hour
+day = now.day
+month = now.month
+year = now.year
 
 
 def save_predictions_hourly():
-    now = datetime.datetime.now()
-    hour = now.hour
-    day = now.day
-    month = now.month
-    year = now.year
+	
     weather = requests.get(
         'http://api.openweathermap.org/data/2.5/weather?q=Ghana,sunyani&appid=e3311f6761891b3558c08b64e1a9bcf9'
     )
@@ -52,11 +52,6 @@ def save_predictions_hourly():
 
 
 def save_daily_predictions():
-    now = datetime.datetime.now()
-    hour = now.hour
-    day = now.day
-    month = now.month
-    year = now.year
     weather = requests.get(
         'http://api.openweathermap.org/data/2.5/weather?q=Ghana,sunyani&appid=e3311f6761891b3558c08b64e1a9bcf9'
     )
