@@ -76,7 +76,7 @@ def daily_predict():
 def hourly_predictions(year, month, day):
     data = models.HourlyPrediction.query.filter_by(year=year,
                                                    month=month,
-                                                   day=day).order_by('hour asc').all()
+                                                   day=day).order_by('hour').all()
     print(data)
     all_data = []
     hours = []
