@@ -13,9 +13,9 @@ CORS(app)
 #     'SQLALCHEMY_DATABASE_URI'] = 'postgres://mmacfnabrqghtw' \
 #                                  ':c1e2e7fbd1b1e1e1879b01e4fc7388ef50f1096e11884d4a378c4e082937865c@ec2-18-210-51-239' \
 #                                  '.compute-1.amazonaws.com:5432/dfjavi9t72pkv3'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-
+basedir = os.path.abspath(os.path.dirname(__file__))
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'predictions.db')
 db = SQLAlchemy(app)
 
 import models
@@ -76,8 +76,8 @@ def daily_predict():
 def hourly_predictions(year, month, day):
     data = models.HourlyPrediction.query.filter_by(year=year,
                                                    month=month,
-                                                   day=day).all()
-
+                                                   day=day).order_by('hour asc').all()
+    print(data)
     all_data = []
     hours = []
     predictions = []
@@ -91,7 +91,7 @@ def hourly_predictions(year, month, day):
 @app.route('/api/daily/predictions/<int:year>/<int:month>')
 def daily_predictions(year, month):
     data = models.DailyPrediction.query.filter_by(year=year,
-                                                  month=month,
+                                                   month=month,
                                                   ).all()
 
     all_data = []
